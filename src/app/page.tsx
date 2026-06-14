@@ -1,65 +1,123 @@
-import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main className="min-h-screen bg-gray-950 text-gray-100 flex flex-col">
+      {/* Header */}
+      <header className="border-b border-gray-800 bg-gray-900/50">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-emerald-400" />
+            <span className="font-semibold text-sm tracking-tight">
+              Alert Dedup Pipeline
+            </span>
+          </div>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/sign-in"
+              className="text-sm text-gray-400 hover:text-white transition-colors"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              Sign in
+            </Link>
+            <Link
+              href="/sign-up"
+              className="text-sm bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1.5 rounded-lg transition-colors"
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              Get started
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </header>
+
+      {/* Hero */}
+      <section className="flex-1 flex flex-col items-center justify-center px-6 py-24 text-center">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium mb-8">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          Built with Nexla Express
         </div>
-      </main>
-    </div>
+
+        <h1 className="text-4xl sm:text-5xl font-semibold text-white tracking-tight max-w-2xl leading-tight mb-6">
+          Stop drowning in
+          <span className="text-emerald-400"> duplicate alerts</span>
+        </h1>
+
+        <p className="text-gray-400 text-lg max-w-xl leading-relaxed mb-10">
+          A Nexla Express pipeline that ingests incident alerts, deduplicates
+          noise by service and error signature, and delivers only actionable
+          events to your engineering team.
+        </p>
+
+        <div className="flex items-center gap-4 flex-wrap justify-center">
+          <Link
+            href="/sign-up"
+            className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors"
+          >
+            Open Dashboard
+          </Link>
+          <Link
+            href="/sign-in"
+            className="border border-gray-700 hover:border-gray-500 text-gray-300 hover:text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors"
+          >
+            Sign in
+          </Link>
+        </div>
+      </section>
+
+      {/* Pipeline Architecture */}
+      <section className="max-w-5xl mx-auto px-6 pb-20 w-full">
+        <p className="text-xs text-gray-600 uppercase tracking-widest text-center mb-8">
+          Pipeline Architecture
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[
+            {
+              step: "01",
+              title: "Ingest",
+              description:
+                "Raw incident alerts arrive via POST /api/ingest from any monitoring source.",
+              color: "text-blue-400",
+              border: "border-blue-500/20",
+              bg: "bg-blue-500/5",
+            },
+            {
+              step: "02",
+              title: "Transform",
+              description:
+                "Nexla Express normalizes fields, builds error signatures, and checks the 1-hour dedupe window.",
+              color: "text-emerald-400",
+              border: "border-emerald-500/20",
+              bg: "bg-emerald-500/5",
+            },
+            {
+              step: "03",
+              title: "Deliver",
+              description:
+                "Only unique, actionable alerts reach the destination. Duplicates are suppressed and counted.",
+              color: "text-purple-400",
+              border: "border-purple-500/20",
+              bg: "bg-purple-500/5",
+            },
+          ].map((item) => (
+            <div
+              key={item.step}
+              className={`rounded-xl border ${item.border} ${item.bg} px-6 py-5`}
+            >
+              <p className={`text-xs font-mono font-semibold mb-3 ${item.color}`}>
+                {item.step}
+              </p>
+              <h3 className="text-white font-medium mb-2">{item.title}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                {item.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-gray-800 py-6 text-center text-xs text-gray-600">
+        Alert Dedup Pipeline — Nexla Express Take-Home Assessment
+      </footer>
+    </main>
   );
 }
