@@ -112,7 +112,7 @@ export default function DashboardPage() {
             >
               Refresh
             </button>
-            <UserButton afterSignOutUrl="/" />
+            <UserButton />
           </div>
         </div>
       </header>
